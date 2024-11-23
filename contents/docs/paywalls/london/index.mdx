@@ -1,0 +1,107 @@
+# London Paywall
+
+The **London Paywall** component provides a visually distinct layout with multiple subscription plans, making it easy for users to select their preferred option. This component is designed to handle dynamic product lists and is fully customizable to match your app's branding.
+
+---
+
+## Features
+
+- **Dynamic Product Selection**  
+  Display subscription plans dynamically with titles and prices.
+
+- **User Interaction**  
+  Allow users to select a plan and confirm their choice.
+
+- **Customizable Appearance**  
+  Adjust colors, buttons, and text styles to fit your design.
+
+---
+
+## Props
+
+| Prop                    | Type              | Default                | Description                                                     |
+| ----------------------- | ----------------- | ---------------------- | --------------------------------------------------------------- |
+| `visible`               | `boolean`         | `false`                | Controls the visibility of the paywall.                         |
+| `onContinue`            | `(index: number)` | Required               | Callback triggered when the user presses the continue button.   |
+| `onClose`               | `() => void`      | Required               | Callback triggered when the close button is pressed.            |
+| `headerText`            | `string`          | `''`                   | The main title of the paywall.                                  |
+| `descriptionText`       | `string`          | `''`                   | The subtitle or description of the paywall.                     |
+| `imageComponent`        | `React.ReactNode` | Required               | A custom image component to display at the top of the paywall.  |
+| `products`              | `Array`           | `[]`                   | Array of product plans to display, each with a title and price. |
+| `buttonText`            | `string`          | `'Continue'`           | Text displayed on the main button.                              |
+| `backgroundColor`       | `string`          | `'#FFFFFF'`            | Background color of the paywall.                                |
+| `closeButtonBgColor`    | `string`          | `'rgba(0, 0, 0, 0.5)'` | Background color of the close button.                           |
+| `closeButtonTextColor`  | `string`          | `'#FFFFFF'`            | Text color of the close button.                                 |
+| `closeButtonDelay`      | `number`          | `0`                    | Delay in milliseconds before the close button appears.          |
+| `displayCloseButton`    | `boolean`         | `true`                 | Controls whether the close button is displayed.                 |
+| `buttonBgColor`         | `string`          | `'#4CAF50'`            | Background color of the main button.                            |
+| `buttonTextColor`       | `string`          | `'#FFFFFF'`            | Text color of the main button.                                  |
+| `buttonRadius`          | `number`          | `55`                   | Corner radius of the main button.                               |
+| `buttonWidthPercentage` | `number`          | `80`                   | Width of the button as a percentage of the screen width.        |
+| `textButtonColor`       | `string`          | `'#666666'`            | Text color for additional link buttons.                         |
+| `textButtonUnderline`   | `boolean`         | `true`                 | Controls whether additional link buttons are underlined.        |
+
+---
+
+## Example Usage
+
+Here’s an example of how to use the **London Paywall** component:
+
+```javascript
+import React from 'react';
+import { View, Button } from 'react-native';
+import { usePaywall } from 'react-native-paywall';
+
+const App = () => {
+  // Initialize the usePaywall hook
+  const { showPaywall, hidePaywall, PaywallComponent } = usePaywall();
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {/* Button to trigger the paywall */}
+      <Button title="Show Paywall" onPress={() => showPaywall('london')} />
+
+      {/* Render the paywall component */}
+      <PaywallComponent
+        onContinue={(selectedIndex) => {
+          console.log(`User continued with plan index: ${selectedIndex}`);
+          hidePaywall(); // Hide the paywall after selection
+        }}
+        headerText="Choose Your Plan"
+        descriptionText="Access premium features with one of our subscription plans."
+        products={[
+          {
+            identifier: '$rc_monthly',
+            product: {
+              title: 'Monthly Plan',
+              priceString: '$4.99',
+            },
+          },
+          {
+            identifier: '$rc_annual',
+            product: {
+              title: 'Annual Plan',
+              priceString: '$39.99',
+            },
+          },
+        ]}
+        backgroundColor="#f0f0f0"
+        buttonBgColor="#008CBA"
+        buttonTextColor="#FFFFFF"
+      />
+    </View>
+  );
+};
+
+export default App;
+```
+
+---
+
+## Styling the Component
+
+The **London Paywall** provides a default style, but you can customize it through the following props:
+
+- **Plan Selection**: Highlight selected plans with custom colors and borders.
+- **Button Styling**: Adjust colors, text, and dimensions with `buttonBgColor`, `buttonTextColor`, `buttonRadius`, and `buttonWidthPercentage`.
+- **Background**: Use the `backgroundColor` prop for a custom background.

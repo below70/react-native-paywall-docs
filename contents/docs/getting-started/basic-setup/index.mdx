@@ -1,0 +1,108 @@
+# Basic Setup
+
+Setting up the **react-native-paywall** library is simple and straightforward. Follow the steps below to get started with integrating the `PaywallComponent` in your React Native application.
+
+---
+
+## Initializing `usePaywall`
+
+To use the `PaywallComponent`, start by importing and initializing the `usePaywall` hook. This hook provides all the necessary methods to display and manage your paywalls.
+
+---
+
+# Try the Demo
+
+You can experiment with the **react-native-paywall** component directly in the browser:
+
+<iframe
+  src="https://snack.expo.dev/embedded/@bilaldem/react-native-paywall?platform=ios&theme=light&preview=true"
+  style={{
+    overflow: 'hidden',
+    background: '#fbfcfd',
+    border: '1px solid var(--color-border)',
+    borderRadius: '4px',
+    height: '1024px',
+    width: '100%',
+  }}></iframe>
+
+### Example: A Simple Paywall
+
+Here's a basic example of integrating the **react-native-paywall** into a simple app:
+
+```javascript
+import React from 'react';
+import { View, Button } from 'react-native';
+import { usePaywall } from 'react-native-paywall';
+
+const App = () => {
+  // Initialize the usePaywall hook
+  const { showPaywall, hidePaywall, PaywallComponent } = usePaywall();
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {/* Button to trigger the paywall */}
+      <Button title="Show Paywall" onPress={() => showPaywall('istanbul')} />
+
+      {/* Render the paywall component */}
+      <PaywallComponent
+        onContinue={(selectedIndex) => {
+          console.log(`User continued with plan index: ${selectedIndex}`);
+          hidePaywall(); // Hide the paywall after selection
+        }}
+        headerText="Ignite your child's curiosity"
+        descriptionText="Get access to all our educational content trusted by thousands of parents"
+        buttonText="Subscribe Now"
+        products={[
+          {
+            identifier: '$rc_monthly',
+            product: {
+              title: 'Monthly Plan',
+              priceString: '$4.99',
+            },
+          },
+          {
+            identifier: '$rc_annual',
+            product: {
+              title: 'Annual Plan',
+              priceString: '$39.99',
+            },
+          },
+        ]}
+        backgroundColor="#f0f0f0"
+        buttonBgColor="#008CBA"
+        buttonTextColor="#FFFFFF"
+      />
+    </View>
+  );
+};
+
+export default App;
+```
+
+---
+
+### Step-by-Step Explanation
+
+1. **Import the Hook and Component**  
+   Import the `usePaywall` hook and `PaywallComponent` from the library.
+
+2. **Initialize `usePaywall`**  
+   Call the `usePaywall` hook to access the following methods:
+
+   - `showPaywall`: Display the paywall with a specific type (e.g., `'istanbul'`).
+   - `hidePaywall`: Hide the currently displayed paywall.
+   - `PaywallComponent`: The UI component for the paywall.
+
+3. **Trigger the Paywall**  
+   Use the `showPaywall` method to display the paywall. Pass a unique type (e.g., `'istanbul'`) to differentiate between multiple paywalls.
+
+4. **Customize the Component**  
+   Pass props to `PaywallComponent` to configure the paywall:
+
+   - **Content Props**: `headerText`, `descriptionText`, `buttonText`, and `products`.
+   - **Styling Props**: `backgroundColor`, `buttonBgColor`, `buttonTextColor`.
+
+5. **Handle User Actions**  
+   Use `onContinue` to handle the user's selection and `hidePaywall` to close the paywall.
+
+---
