@@ -36,7 +36,7 @@ export default function RootLayout({
         suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange>
           <Navbar />

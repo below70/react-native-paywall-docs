@@ -13,7 +13,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme, resolvedTheme } = useTheme();
+
+  // Set the default theme to "light" if no theme is stored in localStorage
+  React.useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (!storedTheme) {
+      setTheme('light'); // Default to light theme
+      localStorage.setItem('theme', 'light');
+    }
+  }, [setTheme]);
+
+  // Listen for theme changes and update localStorage
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
 
   return (
     <DropdownMenu>
@@ -25,10 +40,14 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem
+          onClick={() => handleThemeChange('light')}
+          className={resolvedTheme === 'light' ? 'font-bold' : ''}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem
+          onClick={() => handleThemeChange('dark')}
+          className={resolvedTheme === 'dark' ? 'font-bold' : ''}>
           Dark
         </DropdownMenuItem>
       </DropdownMenuContent>
